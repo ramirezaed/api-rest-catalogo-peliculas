@@ -1,0 +1,47 @@
+{
+  "name": "api-rest-catalogo-peliculas",
+  "version": "1.0.0",
+  "description": "trabajo integrador - api rest catalogo de peliculas (bootcamps 5.0 modulo node.js)",
+  "keywords": [],
+  "homepage": "https://github.com/ramirezaed/api-rest-catalogo-peliculas#readme",
+  "bugs": {
+    "url": "https://github.com/ramirezaed/api-rest-catalogo-peliculas/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ramirezaed/api-rest-catalogo-peliculas.git"
+  },
+  "license": "ISC",
+  "author": "Ramirez alejandro",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch server.ts",
+    "server": "npm run dev",
+    "build": "tsc",
+    "start": "node dist/server.js"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/cookie-parser": "^1.4.10",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^22.20.5",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
+    "tsx": "^4.19.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.9",
+    "express": "^5.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^8.0.0",
+    "swagger-jsdoc": "^6.3.0",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
