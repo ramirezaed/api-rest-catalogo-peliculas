@@ -67,6 +67,7 @@ const movieService = {
 
     const average = (movie.qualification! + qualification) / 2;
     const newQualification = Number(average.toFixed(1));
+
     return await movieDao.qualify(id, newQualification);
   },
 };
