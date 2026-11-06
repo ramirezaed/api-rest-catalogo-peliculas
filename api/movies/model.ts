@@ -15,7 +15,7 @@ const movieSchema = new Schema(
       required: false,
       max: 10,
       min: 1,
-      default: 0,
+      default: 1,
     },
     genres: {
       type: [String],

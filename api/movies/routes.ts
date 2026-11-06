@@ -4,7 +4,7 @@ import { auth } from "../../middleware/auth";
 import { isAdmin } from "../../middleware/isAdmin";
 
 const movieRoutes = express.Router();
-const { create, show, destroy, index, update } = movieController;
+const { create, show, destroy, index, update, qualify } = movieController;
 
 /**
  * @swagger
@@ -56,4 +56,6 @@ movieRoutes.get("/:id", auth, show);
 movieRoutes.delete("/:id", auth, isAdmin, destroy);
 
 movieRoutes.put("/:id", auth, isAdmin, update);
+
+movieRoutes.put("/:id/qualify", auth, qualify);
 export default movieRoutes;
