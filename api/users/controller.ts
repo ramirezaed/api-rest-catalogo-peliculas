@@ -12,6 +12,14 @@ const userController = {
   },
   async show(req: Request, res: Response, next: NextFunction) {
     try {
+      const { id } = req.params;
+      res.status(200).json(await userService.findById(id));
+    } catch (error) {
+      next(error);
+    }
+  },
+  async profile(req: Request, res: Response, next: NextFunction) {
+    try {
       res.status(200).json(await userService.findById(req.user!.id));
     } catch (error) {
       next(error);

@@ -7,6 +7,7 @@ import routes from "./routes";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./config/swagger";
 import { errorHandler } from "./middleware/HttpErrorMiddleware";
+import { logger } from "./middleware/logger";
 
 const PORT = process.env.PORT || 5000;
 const HOST = process.env.HOST || "localhost";
@@ -14,6 +15,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
+app.use(logger);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api", routes);
 

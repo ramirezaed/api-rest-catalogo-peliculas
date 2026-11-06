@@ -49,6 +49,17 @@ const movieController = {
       next(error);
     }
   },
+
+  async qualify(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      res
+        .status(200)
+        .json(await movieService.qualify(id, req.body.qualification));
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 export default movieController;
