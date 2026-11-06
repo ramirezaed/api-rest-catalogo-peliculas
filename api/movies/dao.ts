@@ -5,7 +5,7 @@ import { IRegisterMovieDao, IUpdateMovieDao } from "./types";
 const movieDao = {
   craate: (movie: IRegisterMovieDao) => Movie.create(movie),
   findById: (id: string) => Movie.findOne({ _id: id, deletedAt: null }),
-  softDelete: (id: string) => Movie.findByIdAndDelete(id),
+  delete: (id: string) => Movie.findOneAndDelete({ _id: id, deletedAt: null }),
 
   update: (id: string, movie: Partial<IUpdateMovieDao>) =>
     Movie.findOneAndUpdate(

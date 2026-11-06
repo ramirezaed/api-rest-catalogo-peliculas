@@ -1,5 +1,7 @@
 import express from "express";
 import movieController from "./controller";
+import { auth } from "../../middleware/auth";
+import { isAdmin } from "../../middleware/isAdmin";
 
 const movieRoutes = express.Router();
 const { create, show, destroy, index, update } = movieController;
@@ -45,13 +47,13 @@ const { create, show, destroy, index, update } = movieController;
  *       500:
  *         description: Error interno del servidor.
  */
-movieRoutes.post("/", create);
+movieRoutes.post("/", auth, isAdmin, create);
 
-movieRoutes.get("/", index);
+movieRoutes.get("/", auth, index);
 
-movieRoutes.get("/:id", show);
+movieRoutes.get("/:id", auth, show);
 
-movieRoutes.delete("/:id", destroy);
+movieRoutes.delete("/:id", auth, isAdmin, destroy);
 
-movieRoutes.put("/:id", update);
+movieRoutes.put("/:id", auth, isAdmin, update);
 export default movieRoutes;

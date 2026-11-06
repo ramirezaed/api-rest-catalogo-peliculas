@@ -46,10 +46,10 @@ const movieService = {
     };
   },
 
-  async softDelete(id: string) {
+  async delete(id: string) {
     const movie = await movieDao.findById(id);
     if (!movie) throw new HttpError(404, "Pelicula no encotnrada");
-    await movieDao.softDelete(id);
+    await movieDao.delete(id);
     return { message: "Pelicula eliminada" };
   },
   async update(id: string, data: IUpdateMovieDao) {
