@@ -1,3 +1,4 @@
+import { FilterQuery } from "mongoose";
 import { Movie } from "./model";
 import { IRegisterMovieDao, IUpdateMovieDao } from "./types";
 
@@ -13,9 +14,13 @@ const movieDao = {
       { new: true },
     ),
 
-  index: (skip: number, limit: number) =>
-    Movie.find({ deletedAt: null }).skip(skip).limit(limit),
-  count: () => Movie.countDocuments({ deletedAt: null }),
+  index: (skip: number, limit: number, query: FilterQuery<typeof Movie>) =>
+    Movie.find({ ...query, deletedAt: null })
+      .sort({ qualification: -1 })
+      .skip(skip)
+      .limit(limit),
+  count: (query: FilterQuery<typeof Movie>) =>
+    Movie.countDocuments({ ...query, deletedAt: null }),
 };
 
 export default movieDao;

@@ -11,3 +11,9 @@ export interface IUpdateMovieDao {
   qualification: number;
   generes: string[];
 }
+
+export interface IFilterMovie {
+  title?: string;
+  director?: string;
+  genres?: string;
+}

@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import movieService from "./service";
+import { IFilterMovie } from "./types";
 
 const movieController = {
   async create(req: Request, res: Response, next: NextFunction) {
@@ -9,6 +10,7 @@ const movieController = {
       next(error);
     }
   },
+
   async show(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
@@ -22,7 +24,9 @@ const movieController = {
     try {
       const page = Number(req.query.page) || 1;
       const limit = Number(req.query.limit) || 10;
-      res.status(200).json(await movieService.index(page, limit));
+      res
+        .status(200)
+        .json(await movieService.index(page, limit, req.query as IFilterMovie));
     } catch (error) {
       next(error);
     }

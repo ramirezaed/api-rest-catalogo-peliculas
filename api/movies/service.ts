@@ -1,6 +1,8 @@
+import { FilterQuery } from "mongoose";
 import { HttpError } from "../../errors/HttpError";
 import movieDao from "./dao";
-import { IRegisterMovieDao, IUpdateMovieDao } from "./types";
+import { IFilterMovie, IRegisterMovieDao, IUpdateMovieDao } from "./types";
+import { Movie } from "./model";
 
 const movieService = {
   async create(data: IRegisterMovieDao) {
@@ -14,12 +16,24 @@ const movieService = {
     return movie;
   },
 
-  async index(page: number, limit: number) {
+  async index(page: number, limit: number, filters: IFilterMovie) {
     const skip = (page - 1) * limit;
+
+    const query: FilterQuery<typeof Movie> = {};
+
+    if (filters.genres) {
+      query.genres = filters.genres;
+    }
+    if (filters.title) {
+      query.title = { $regex: filters.title, $options: "i" };
+    }
+    if (filters.director) {
+      query.director = { $regex: filters.director, $options: "i" };
+    }
+
     const [movies, total] = await Promise.all([
-      //Ejecuta las dos consultas en paralelo
-      movieDao.index(skip, limit),
-      movieDao.count(),
+      movieDao.index(skip, limit, query),
+      movieDao.count(query),
     ]);
     return {
       movies,
@@ -38,7 +52,6 @@ const movieService = {
     await movieDao.softDelete(id);
     return { message: "Pelicula eliminada" };
   },
-
   async update(id: string, data: IUpdateMovieDao) {
     const movie = await movieService.findById(id);
     if (!movie) throw new HttpError(404, "Pelicula no encontrada");
