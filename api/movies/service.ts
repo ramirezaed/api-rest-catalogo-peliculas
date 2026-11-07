@@ -46,16 +46,29 @@ const movieService = {
     };
   },
 
-  async softDelete(id: string) {
+  async delete(id: string) {
     const movie = await movieDao.findById(id);
     if (!movie) throw new HttpError(404, "Pelicula no encotnrada");
-    await movieDao.softDelete(id);
+    await movieDao.delete(id);
     return { message: "Pelicula eliminada" };
   },
   async update(id: string, data: IUpdateMovieDao) {
     const movie = await movieService.findById(id);
     if (!movie) throw new HttpError(404, "Pelicula no encontrada");
     return await movieDao.update(id, data);
+  },
+
+  async qualify(id: string, qualification: number) {
+    const movie = await movieDao.findById(id);
+    if (!movie) throw new HttpError(404, "pelicula no encontrada");
+
+    if (qualification < 1 || qualification > 10)
+      throw new HttpError(400, "La puntuacion debe estar entre 1 y 10");
+
+    const average = (movie.qualification! + qualification) / 2;
+    const newQualification = Number(average.toFixed(1));
+
+    return await movieDao.qualify(id, newQualification);
   },
 };
 

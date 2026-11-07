@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import movieService from "./service";
-import { IFilterMovie } from "./types";
+import { IFilterMovie, IUpdateMovieDao } from "./types";
 
 const movieController = {
   async create(req: Request, res: Response, next: NextFunction) {
@@ -35,7 +35,7 @@ const movieController = {
   async destroy(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
-      res.status(200).json(await movieService.softDelete(id));
+      res.status(200).json(await movieService.delete(id));
     } catch (error) {
       next(error);
     }
@@ -45,6 +45,17 @@ const movieController = {
     try {
       const { id } = req.params;
       res.status(200).json(await movieService.update(id, req.body));
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async qualify(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      res
+        .status(200)
+        .json(await movieService.qualify(id, req.body.qualification));
     } catch (error) {
       next(error);
     }

@@ -5,15 +5,13 @@ import { IRegisterMovieDao, IUpdateMovieDao } from "./types";
 const movieDao = {
   craate: (movie: IRegisterMovieDao) => Movie.create(movie),
   findById: (id: string) => Movie.findOne({ _id: id, deletedAt: null }),
-  softDelete: (id: string) => Movie.findByIdAndDelete(id),
-
+  delete: (id: string) => Movie.findOneAndDelete({ _id: id, deletedAt: null }),
   update: (id: string, movie: Partial<IUpdateMovieDao>) =>
     Movie.findOneAndUpdate(
       { _id: id, deletedAt: null },
       { $set: movie },
       { new: true },
     ),
-
   index: (skip: number, limit: number, query: FilterQuery<typeof Movie>) =>
     Movie.find({ ...query, deletedAt: null })
       .sort({ qualification: -1 })
@@ -21,6 +19,15 @@ const movieDao = {
       .limit(limit),
   count: (query: FilterQuery<typeof Movie>) =>
     Movie.countDocuments({ ...query, deletedAt: null }),
+
+  qualify: (id: string, score: number) =>
+    Movie.findOneAndUpdate(
+      { _id: id, deletedAt: null },
+      {
+        qualification: score,
+      },
+      { new: true },
+    ),
 };
 
 export default movieDao;
