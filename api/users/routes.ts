@@ -115,6 +115,32 @@ userRoutes.get("/", auth, isAdmin, index);
 
 /**
  * @swagger
+ * /users/me:
+ *   get:
+ *     summary: Obtener mi perfil
+ *     description: Obtiene los datos del usuario autenticado.
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Perfil obtenido correctamente.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               description: Información del usuario autenticado.
+ *       401:
+ *         description: No autenticado o token inválido.
+ *       404:
+ *         description: Usuario no encontrado.
+ *       500:
+ *         description: Error interno del servidor.
+ */
+userRoutes.get("/me", auth, profile);
+
+/**
+ * @swagger
  * /users/{id}:
  *   get:
  *     summary: Obtener usuario por ID
@@ -146,32 +172,6 @@ userRoutes.get("/", auth, isAdmin, index);
  *         description: Error interno del servidor.
  */
 userRoutes.get("/:id", auth, show);
-
-/**
- * @swagger
- * /users/me:
- *   get:
- *     summary: Obtener mi perfil
- *     description: Obtiene los datos del usuario autenticado.
- *     tags: [Users]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Perfil obtenido correctamente.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               description: Información del usuario autenticado.
- *       401:
- *         description: No autenticado o token inválido.
- *       404:
- *         description: Usuario no encontrado.
- *       500:
- *         description: Error interno del servidor.
- */
-userRoutes.get("/me", auth, profile);
 
 /**
  * @swagger
